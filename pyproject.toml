@@ -1,20 +1,15 @@
 [tool.poetry]
-name = "simple-chat-agent"
+name = "generate-image-agent"
 version = "0.1.0"
 description = ""
 authors = ["moarshy <marshath@gmail.com>"]
 readme = "README.md"
-packages = [
-    {include = "simple_chat_agent", from="."}
-]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<=3.13"
 pydantic = "^2.7.0"
-litellm = "^1.35.15"
-naptha-sdk = {git = "https://github.com/NapthaAI/naptha-sdk.git"}
+naptha-sdk = {git = "https://github.com/NapthaAI/naptha-sdk.git", branch = "feature/tool_calls"}
 python-dotenv = "^1.0.1"
-gitpython = "^3.1.43"
 
 [build-system]
 requires = ["poetry-core"]

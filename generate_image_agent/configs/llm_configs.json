@@ -1,11 +1,9 @@
 [
     {
         "config_name": "model_1",
-        "client": "ollama",
-        "model": "ollama/phi",
-        "temperature": 0.7,
-        "max_tokens": 1000,
-        "api_base": "http://localhost:11434"
+        "client": "stability",
+        "model": "stable-diffusion-xl-1024-v1-0",
+        "api_base": "https://api.stability.ai"
     },
     {
         "config_name": "model_2",

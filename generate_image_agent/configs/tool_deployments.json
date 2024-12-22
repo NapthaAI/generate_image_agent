@@ -1,0 +1,18 @@
+[
+    {
+        "name": "tool_deployment_1",
+        "module": {"name": "generate_image_tool"},
+        "tool_node_url": "http://localhost:7001",
+        "tool_config": {
+            "config_name": "tool_config_1",
+            "llm_config": {"config_name": "model_1"}
+        },
+        "data_generation_config": {
+            "config_name": "data_generation_config_1",
+            "save_outputs": true,
+            "save_outputs_location": "node",
+            "save_outputs_path": "outputs",
+            "default_filename": "output.png"
+        }
+    }
+]
