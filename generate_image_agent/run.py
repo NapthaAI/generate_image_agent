@@ -26,7 +26,7 @@ class GenerateImageAgent:
 async def run(agent_run: AgentRunInput, *args, **kwargs):
     logger.info(f"Running with inputs {agent_run.inputs.tool_input_data}")
 
-    generate_image_agent = GenerateImageAgent(agent_run.agent_deployment)
+    generate_image_agent = GenerateImageAgent(agent_run.deployment)
 
     return await generate_image_agent.call_tool(agent_run)
 
