@@ -3,7 +3,7 @@
         "name": "tool_deployment_1",
         "module": {"name": "generate_image_tool"},
         "node": {"ip": "localhost"},
-        "tool_config": {
+        "config": {
             "config_name": "tool_config_1",
             "llm_config": {"config_name": "model_1"}
         },

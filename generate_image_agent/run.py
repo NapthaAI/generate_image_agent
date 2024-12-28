@@ -15,7 +15,7 @@ class GenerateImageAgent:
     def __init__(self, agent_deployment: AgentDeployment):
         self.agent_deployment = agent_deployment
         self.tool = Tool(tool_deployment=self.agent_deployment.tool_deployments[0])
-        self.system_prompt = SystemPromptSchema(role=agent_deployment.agent_config.system_prompt["role"])
+        self.system_prompt = SystemPromptSchema(role=agent_deployment.config.system_prompt["role"])
 
     async def call_tool(self, agent_run: AgentRunInput):
 
