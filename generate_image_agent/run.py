@@ -17,18 +17,18 @@ class GenerateImageAgent:
         self.tool = Tool(tool_deployment=self.agent_deployment.tool_deployments[0])
         self.system_prompt = SystemPromptSchema(role=agent_deployment.config.system_prompt["role"])
 
-    async def call_tool(self, agent_run: AgentRunInput):
+    async def call_tool(self, module_run: AgentRunInput):
 
-        tool_response = await self.tool.call_tool_func(agent_run)
+        tool_response = await self.tool.call_tool_func(module_run)
 
         return tool_response
 
-async def run(agent_run: AgentRunInput, *args, **kwargs):
-    logger.info(f"Running with inputs {agent_run.inputs.tool_input_data}")
+async def run(module_run: AgentRunInput, *args, **kwargs):
+    logger.info(f"Running with inputs {module_run.inputs.tool_input_data}")
 
-    generate_image_agent = GenerateImageAgent(agent_run.deployment)
+    generate_image_agent = GenerateImageAgent(module_run.deployment)
 
-    return await generate_image_agent.call_tool(agent_run)
+    return await generate_image_agent.call_tool(module_run)
 
 
 if __name__ == "__main__":
@@ -45,12 +45,12 @@ if __name__ == "__main__":
         tool_input_data="generate an image of a cat",
     )
 
-    agent_run = AgentRunInput(
+    module_run = AgentRunInput(
         inputs=input_params,
         agent_deployment=agent_deployments[0],
         consumer_id=naptha.user.id,
     )
 
-    response = asyncio.run(run(agent_run))
+    response = asyncio.run(run(module_run))
 
 
