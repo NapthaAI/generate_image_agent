@@ -3,7 +3,7 @@ import asyncio
 import logging
 from dotenv import load_dotenv
 from naptha_sdk.schemas import AgentDeployment, AgentRunInput
-from naptha_sdk.tool import Tool
+from naptha_sdk.modules.tool import Tool
 from generate_image_agent.schemas import InputSchema, SystemPromptSchema
 
 load_dotenv()
