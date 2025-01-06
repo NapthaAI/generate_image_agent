@@ -783,8 +783,8 @@ tomlkit = "^0.13.2"
 [package.source]
 type = "git"
 url = "https://github.com/NapthaAI/naptha-sdk.git"
-reference = "feature/tool_calls"
-resolved_reference = "0f50c4efa482b25ddc012be9bd206cf6ef420919"
+reference = "HEAD"
+resolved_reference = "36a112a07d31cb883bcf51b3dcba06fd9746ff99"
 
 [[package]]
 name = "natsort"
@@ -1505,4 +1505,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<=3.13"
-content-hash = "5e1d72f0a493fc81939f2769f0de85f0e42e63d60d83d79c54e59a4ac7043e08"
+content-hash = "0445758bf6dcd67ca8a90e87f03e0576c9d3b7b6757c630ab6edadcd092ec9ec"
