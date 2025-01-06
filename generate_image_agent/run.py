@@ -2,9 +2,11 @@
 import asyncio
 import logging
 from dotenv import load_dotenv
+import os
 from typing import Dict
 from naptha_sdk.schemas import AgentDeployment, AgentRunInput, ToolRunInput
 from naptha_sdk.modules.tool import Tool
+from naptha_sdk.user import sign_consumer_id
 from generate_image_agent.schemas import InputSchema, SystemPromptSchema
 
 load_dotenv()
@@ -23,6 +25,7 @@ class GenerateImageAgent:
             consumer_id=module_run.consumer_id,
             inputs=module_run.inputs,
             deployment=self.deployment.tool_deployments[0],
+            signature=sign_consumer_id(module_run.consumer_id, os.getenv("PRIVATE_KEY"))
         )
 
         tool_response = await self.tool.call_tool_func(tool_run_input)
@@ -40,7 +43,6 @@ async def run(module_run: Dict, *args, **kwargs):
 
 
 if __name__ == "__main__":
-    import os
     from naptha_sdk.client.naptha import Naptha
     from naptha_sdk.configs import setup_module_deployment
 
@@ -58,6 +60,7 @@ if __name__ == "__main__":
         "inputs": input_params,
         "deployment": deployment,
         "consumer_id": naptha.user.id,
+        "signature": sign_consumer_id(naptha.user.id, os.getenv("PRIVATE_KEY"))
     }
 
     response = asyncio.run(run(module_run))
