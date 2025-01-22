@@ -30,7 +30,7 @@ class GenerateImageAgent:
 
         tool_response = await self.tool.call_tool_func(tool_run_input)
 
-        return tool_response
+        return tool_response.results
 
 async def run(module_run: Dict, *args, **kwargs):
     module_run = AgentRunInput(**module_run)
