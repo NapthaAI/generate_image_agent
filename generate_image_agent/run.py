@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     input_params = {
         "tool_name": "generate_image_tool",
-        "tool_input_data": "generate an image of a cat",
+        "prompt": "generate an image of a cat",
     }
 
     module_run = {
