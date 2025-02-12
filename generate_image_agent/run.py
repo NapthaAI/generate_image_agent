@@ -6,10 +6,10 @@ import os
 from typing import Dict
 from naptha_sdk.schemas import AgentDeployment, AgentRunInput, ToolRunInput
 from naptha_sdk.modules.tool import Tool
-from naptha_sdk.user import sign_consumer_id
+from naptha_sdk.user import sign_consumer_id, get_private_key_from_pem
 from generate_image_agent.schemas import InputSchema, SystemPromptSchema
 
-load_dotenv()
+load_dotenv(override=True)
 
 logger = logging.getLogger(__name__)
 
@@ -21,12 +21,15 @@ class GenerateImageAgent:
         self.system_prompt = SystemPromptSchema(role=self.deployment.config.system_prompt["role"])
 
     async def run(self, module_run: AgentRunInput, *args, **kwargs):
+        print("CCCCC", os.getenv("PRIVATE_KEY"))
+        print("VVVVVV", get_private_key_from_pem(os.getenv("PRIVATE_KEY")))
         tool_run_input = ToolRunInput(
             consumer_id=module_run.consumer_id,
             inputs=module_run.inputs,
             deployment=self.deployment.tool_deployments[0],
-            signature=sign_consumer_id(module_run.consumer_id, os.getenv("PRIVATE_KEY"))
+            signature=sign_consumer_id(module_run.consumer_id, get_private_key_from_pem(os.getenv("PRIVATE_KEY")))
         )
+        print("ZZZZZ", tool_run_input.signature)
         tool_response = await self.tool.run(tool_run_input)
         return tool_response.results
 
@@ -57,7 +60,7 @@ if __name__ == "__main__":
         "inputs": input_params,
         "deployment": deployment,
         "consumer_id": naptha.user.id,
-        "signature": sign_consumer_id(naptha.user.id, os.getenv("PRIVATE_KEY"))
+        "signature": sign_consumer_id(naptha.user.id, get_private_key_from_pem(os.getenv("PRIVATE_KEY")))
     }
 
     response = asyncio.run(run(module_run))
