@@ -14,31 +14,28 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 class GenerateImageAgent:
-
-    def __init__(self, deployment: AgentDeployment):
+    async def create(self, deployment: AgentDeployment, *args, **kwargs):
         self.deployment = deployment
-        self.tool = Tool(tool_deployment=self.deployment.tool_deployments[0])
+        self.tool = Tool()
+        tool_deployment = await self.tool.create(deployment=deployment.tool_deployments[0])
         self.system_prompt = SystemPromptSchema(role=self.deployment.config.system_prompt["role"])
 
-    async def call_tool(self, module_run: AgentRunInput):
+    async def run(self, module_run: AgentRunInput, *args, **kwargs):
         tool_run_input = ToolRunInput(
             consumer_id=module_run.consumer_id,
             inputs=module_run.inputs,
             deployment=self.deployment.tool_deployments[0],
             signature=sign_consumer_id(module_run.consumer_id, os.getenv("PRIVATE_KEY"))
         )
-
-        tool_response = await self.tool.call_tool_func(tool_run_input)
-
+        tool_response = await self.tool.run(tool_run_input)
         return tool_response.results
 
 async def run(module_run: Dict, *args, **kwargs):
     module_run = AgentRunInput(**module_run)
     module_run.inputs = InputSchema(**module_run.inputs)
-    generate_image_agent = GenerateImageAgent(module_run.deployment)
-
-    tool_response = await generate_image_agent.call_tool(module_run)
-
+    generate_image_agent = GenerateImageAgent()
+    await generate_image_agent.create(module_run.deployment)
+    tool_response = await generate_image_agent.run(module_run)
     return tool_response
 
 
